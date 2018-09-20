@@ -409,6 +409,105 @@ class Location {
 ```
 
 
+### <div id="class01-04">04、类</dvi>
+#### 介绍
+```typescript
+class Greeter {
+    greeting: string;       // 属性
+    constructor(message: string) {      // 构造函数
+        this.greeting = message;
+    }
+    greet() {       // 方法
+        return "Hello, " + this.greeting;
+    }
+}
+
+let greeter = new Greeter("world");
+```
+
+#### 继承
+```typescript
+class Animal {
+    move(distanceInMeters: number = 0) {
+        console.log(`Animal moved ${distanceInMeters}m.`);
+    }
+}
+
+class Dog extends Animal {
+    bark() {
+        console.log('Woof! Woof!');
+    }
+}
+
+const dog = new Dog();
+dog.bark();
+dog.move(10);
+dog.bark();
+```
+
+来看一个更加复杂的例子
+```typescript
+class Animal{
+    name: string;
+    constructor(theName: string) {
+        this.name = theName
+    }
+    move(distanceInMeters: number = 0) {
+        console.log(`${this.name} moved ${distanceInMeters} m.`)
+    }
+}
+class Snake extends Animal {
+    constructor(name: string) {
+        super(name);
+    }
+    move(distanceInMeters = 5) {
+        console.log('slithering......');
+        super.move(distanceInMeters);
+    }
+}
+class Horse extends Animal{
+    constructor(name: string) {
+        super(name);
+    }
+    move(distanceInMeters = 45) {
+        console.log('Galloping......');
+        super.move(distanceInMeters);
+    }
+}
+let sam = new Snake('Sammy the python');
+let tom:Horse = new Horse('Tommy the Palomino');
+
+sam.move();
+tom.move(34);
+```
+
+#### 公共，私有与受保护的修饰符                  
+**默认为 public**
+
+你也可以明确的将一个成员标记成 public。 我们可以用下面的方式来重写上面的 Animal类：
+```typescript
+class Animal {
+    public name: string;
+    public constructor(thename: string) {
+        this.name = thename;
+    }
+    public move(distanceInMeters: number) {
+        console.log(`${this.name} moved ${distanceInMeters} m.`)
+    }
+}
+```
+
+**理解 private**
+
+当成员被标记成 private时，它就不能在声明它的类的外部访问
+```typescript
+class Animal {
+    private name: string;
+    constructor(theName: string) { this.name = theName; }
+}
+new Animal("Cat").name; // 错误: 'name' 是私有的.
+```
+
 
 
 
