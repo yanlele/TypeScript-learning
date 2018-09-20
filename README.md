@@ -121,12 +121,151 @@ let someValue: any = "this is a string";
 let strLength: number = (someValue as string).length;
 ```
 
-
 ### <div class="class01-02">02、变量申明</div>
 这一节主要讲的是变量申明，var、let、const、解构赋值 等，可以直接参考es6就可以了。
 
 
 ### <div class="class01-03">03、接口</div>
+#### 接口初探
+举例子：
+```typescript
+function printLabel(labelledObj: { label: string }) {
+  console.log(labelledObj.label);
+}
+let myObj = { size: 10, label: "Size 10 Object" };
+printLabel(myObj);
+
+// 重写上面的例子
+interface LabelledValue {
+  label: string;
+}
+function printLabel(labelledObj: LabelledValue) {
+  console.log(labelledObj.label);
+}
+let myObj = {size: 10, label: "Size 10 Object"};
+printLabel(myObj);
+```
+需要注意的是，我们在这里并不能像在其它语言里一样，说传给 printLabel的对象实现了这个接口。我们只会去关注值的外形。 只要传入的对象满足上面提到的必要条件，那么它就是被允许的。               
+ 
+#### 可选属性               
+接口里的属性不全都是必需的。 有些是只在某些条件下存在，或者根本不存在。 可选属性在应用“option bags”模式时很常用，即给函数传入的参数对象中只有部分属性赋值了。
+```typescript
+interface SquareConfig {
+  color?: string;
+  width?: number;
+}
+function createSquare(config: SquareConfig): {color: string; area: number} {
+  let newSquare = {color: "white", area: 100};
+  if (config.color) {
+    newSquare.color = config.color;
+  }
+  if (config.width) {
+    newSquare.area = config.width * config.width;
+  }
+  return newSquare;
+}
+let mySquare = createSquare({color: "black"});
+```
+
+#### 只读属性                   
+一些对象属性只能在对象刚刚创建的时候修改其值。 你可以在属性名前用 readonly来指定只读属性:                  
+```typescript
+interface Point {
+    readonly x: number,
+    readonly y: number
+}
+let p1: Point = {x:5, y:10};
+p1.x = 10;
+```
+
+TypeScript具有ReadonlyArray<T>类型, 可以确保数组创建后再也不能被修改：                   
+```typescript
+let a: number[] = [1, 2, 3, 4];
+let ro: ReadonlyArray<number> = a;
+ro[0] = 12; // error!
+ro.push(5); // error!
+ro.length = 100; // error!
+a = ro; // error!
+```
+
+可以这样做断言：
+```typescript
+a = ro as number[];
+```
+
+readonly vs const               
+最简单判断该用readonly还是const的方法是看要把它做为变量使用还是做为一个属性。 做为变量使用的话用 const，若做为属性则使用readonly。                 
+
+#### 额外的属性检查                    
+```typescript
+interface SquareConfig {
+    color?: string;
+    width?: number;
+    [propName: string]: any;
+}
+function createSquare(config: SquareConfig): {color: string; area: number} {
+    let newSquare = {color: "white", area: 100};
+    if (config.color) {
+        newSquare.color = config.color;
+    }
+    if (config.width) {
+        newSquare.area = config.width * config.width;
+    }
+    return newSquare;
+}
+let mySquare = createSquare({colorr: "black"});
+```
+这我们要表示的是SquareConfig可以有任意数量的属性，并且只要它们不是color和width，那么就无所谓它们的类型是什么。
+
+还有最后一种跳过这些检查的方式，这可能会让你感到惊讶，它就是将这个对象赋值给一个另一个变量： 因为 squareOptions不会经过额外属性检查，所以编译器不会报错。
+
+总结一下就是最好别用这种绕开检测的手段，可能会影响程序的正常进行。                       
+
+
+#### 函数类型                   
+为了使用接口表示函数类型，我们需要给接口定义一个调用签名。 它就像是一个只有参数列表和返回值类型的函数定义。参数列表里的每个参数都需要名字和类型。
+
+```typescript
+interface SearchFunc {
+  (source: string, subString: string): boolean;
+}
+
+// 最经典的写法
+let mySearch: SearchFunc;
+mySearch = function(source: string, subString: string) {
+  let result = source.search(subString);
+  return result > -1;
+};
+
+//对于函数类型的类型检查来说，函数的参数名不需要与接口里定义的名字相匹配。 比如，我们使用下面的代码重写上面的例子：
+let mySearch: SearchFunc;
+mySearch = function(src: string, sub: string): boolean {
+  let result = src.search(sub);
+  return result > -1;
+};
+
+// 这样写也是可以的
+let mySearch: SearchFunc;
+mySearch = function(src, sub) {
+    let result = src.search(sub);
+    return result > -1;
+}
+```
+
+#### 可索引的类型                     
+可索引类型具有一个 索引签名，它描述了对象索引的类型，还有相应的索引返回值类型。 
+```typescript
+interface StringArray {
+  [index: number]: string;
+}
+
+let myArray: StringArray;
+myArray = ["Bob", "Fred"];
+
+let myStr: string = myArray[0];
+```
+这个索引签名表示了当用 number去索引StringArray时会得到string类型的返回值。
+
 
 
 

@@ -11,6 +11,7 @@ coverage/
 # production
 /build
 /coverage
+/dist
 
 # misc
 .DS_Store
