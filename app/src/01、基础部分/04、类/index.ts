@@ -64,6 +64,7 @@ class Animal {
 }*/
 
 // 理解private
+/*
 class Animal {
     private _name:string;
     constructor(name: string) {
@@ -80,4 +81,54 @@ class Animal {
     }
 }
 let animal:Animal = new Animal('yan');
-console.log(animal.name);
+console.log(animal.name);*/
+
+
+// 参数兼容性探究
+/*
+class Animal {
+    private name: string;
+    constructor(theName: string) {
+        this.name = theName;
+    }
+}
+class Rhino extends Animal {
+    constructor() {
+        super('Rhino')
+    }
+}
+
+class Employee {
+    private name: string;
+    constructor(theName: string) {
+        this.name = theName;
+    }
+}
+
+let animal = new Animal("Goat");
+let rhino = new Rhino();
+let employee = new Employee("Bob");
+
+animal = rhino;
+animal = employee; // 错误: Animal 与 Employee 不兼容.*/
+
+
+// 理解protected
+class Person {
+    protected name: string;
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+class Employee extends Person {
+    private department: string;
+    constructor(name:string, department: string) {
+        super(name);
+        this.department = department;
+    }
+    public getElevatorPitch(): string {
+        return `Hello , my name is ${this.name} and i work in ${this.department}.`
+    }
+}
+let howard = new Employee('Howard','Sales');
+console.log(howard.getElevatorPitch());
