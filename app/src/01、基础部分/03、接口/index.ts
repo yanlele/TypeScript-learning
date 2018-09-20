@@ -47,6 +47,7 @@ p1.x = 10;*/
 
 
 // 函数类型
+/*
 interface SearchFunc {
     (source: string, subString: string): boolean;
 }
@@ -55,4 +56,54 @@ mySearch = function(src, sub) {
     let result = src.search(sub);
     return result > -1;
 };
-console.log(mySearch('53','3'));
+console.log(mySearch('53','3'));*/
+
+
+// 类静态部分与实例部分的区别
+/*
+interface ClockConstructor {
+    new (hour: number, minute: number);
+}
+
+class Clock implements ClockConstructor {
+    currentTime: Date;
+    constructor(h: number, m: number) { }
+}*/
+
+
+/*
+interface ClockConstructor {
+    new (hour: number, minute: number): ClockInterface;
+}
+interface ClockInterface {
+    tick();
+}
+
+function createClock(ctor: ClockConstructor, hour: number, minute: number): ClockInterface {
+    return new ctor(hour, minute);
+}
+
+class DigitalClock implements ClockInterface {
+    constructor(h: number, m: number) { }
+    tick() {
+        console.log("beep beep");
+    }
+}
+class AnalogClock implements ClockInterface {
+    constructor(h: number, m: number) { }
+    tick() {
+        console.log("tick tock");
+    }
+}
+
+let digital = createClock(DigitalClock, 12, 17);
+let analog = createClock(AnalogClock, 7, 32);*/
+
+interface Square{
+    color: string,
+    sideLength: number
+}
+let square = <Square>{};
+square.color = "blue";
+square.sideLength = 10;
+console.log(square);

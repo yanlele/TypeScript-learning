@@ -266,6 +266,149 @@ let myStr: string = myArray[0];
 ```
 这个索引签名表示了当用 number去索引StringArray时会得到string类型的返回值。
 
+共有支持两种索引签名：字符串和数字。 可以同时使用两种类型的索引，但是数字索引的返回值必须是字符串索引返回值类型的子类型。
+```typescript
+class Animal {
+    name: string;
+}
+class Dog extends Animal {
+    breed: string;
+}
+// 错误：使用数值型的字符串索引，有时会得到完全不同的Animal!
+interface NotOkay {
+    [x: number]: Animal;
+    [x: string]: Dog;
+}
+```
+
+下面的例子里， name的类型与字符串索引类型不匹配，所以类型检查器给出一个错误提示：
+```typescript
+interface NumberDictionary {
+  [index: string]: number;
+  length: number;    // 可以，length是number类型
+  name: string       // 错误，`name`的类型与索引类型返回值的类型不匹配
+}
+```
+
+最后，你可以将索引签名设置为只读，这样就防止了给索引赋值：
+```typescript
+interface ReadonlyStringArray {
+    readonly [index: number]: string;
+}
+let myArray: ReadonlyStringArray = ["Alice", "Bob"];
+myArray[2] = "Mallory"; // error!
+```
+
+#### 类类型
+**实现接口**                    
+```typescript
+interface ClockInterface {
+    currentTime: Date;
+}
+
+class Clock implements ClockInterface {
+    currentTime: Date;
+    constructor(h: number, m: number) { }
+}
+```
+
+**类静态部分与实例部分的区别**
+
+当你操作类和接口的时候，你要知道类是具有两个类型的：静态部分的类型和实例的类型。
+
+看下面的例子，我们定义了两个接口， ClockConstructor为构造函数所用和ClockInterface为实例方法所用。 为了方便我们定义一个构造函数 createClock，它用传入的类型创建实例。
+
+#### 继承接口                   
+```typescript
+interface Shape {
+    color: string;
+}
+
+interface Square extends Shape {
+    sideLength: number;
+}
+
+let square = <Square>{};
+square.color = "blue";
+square.sideLength = 10;
+
+// 这样也可以
+let square = <{color: string, sideLength: number}>{};
+square.color = "blue";
+square.sideLength = 10;
+console.log(square);
+```
+
+一个接口可以继承多个接口，创建出多个接口的合成接口。
+```typescript
+interface Shape {
+    color: string;
+}
+
+interface PenStroke {
+    penWidth: number;
+}
+
+interface Square extends Shape, PenStroke {
+    sideLength: number;
+}
+
+let square = <Square>{};
+square.color = "blue";
+square.sideLength = 10;
+square.penWidth = 5.0;
+```
+
+
+#### 混合类型               
+```typescript
+interface Counter {
+    (start: number): string;
+    interval: number;
+    reset(): void;
+}
+
+function getCounter(): Counter {
+    let counter = <Counter>function (start: number) { };
+    counter.interval = 123;
+    counter.reset = function () { };
+    return counter;
+}
+
+let c = getCounter();
+c(10);
+c.reset();
+c.interval = 5.0;
+```
+
+#### 接口继承类              
+```typescript
+class Control {
+    private state: any;
+}
+
+interface SelectableControl extends Control {
+    select(): void;
+}
+
+class Button extends Control implements SelectableControl {
+    select() { }
+}
+
+class TextBox extends Control {
+    select() { }
+}
+
+// 错误：“Image”类型缺少“state”属性。
+class Image implements SelectableControl {
+    select() { }
+}
+
+class Location {
+}
+```
+
+
 
 
 
