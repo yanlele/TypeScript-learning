@@ -114,6 +114,7 @@ animal = employee; // 错误: Animal 与 Employee 不兼容.*/
 
 
 // 理解protected
+/*
 class Person {
     protected name: string;
     constructor(name: string) {
@@ -131,4 +132,78 @@ class Employee extends Person {
     }
 }
 let howard = new Employee('Howard','Sales');
-console.log(howard.getElevatorPitch());
+console.log(howard.getElevatorPitch());*/
+
+
+// 参数属性
+/*
+class Animal{
+    constructor(private name: string) {
+    }
+
+    move(distanceInMeters: number) {
+        console.log(`${this.name} moved ${distanceInMeters}`)
+    }
+}
+
+let animal:Animal = new Animal('cat');
+animal.move(5);
+*/
+
+
+// 存取器
+class Employee {
+    private _fullName: string = 'yale';
+
+    get fullName(): string {
+        return this._fullName;
+    }
+
+    set fullName(value: string) {
+        this._fullName = value;
+    }
+}
+let employee: Employee = new Employee();
+employee.fullName = '123';
+console.log(employee.fullName);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

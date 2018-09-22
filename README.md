@@ -585,7 +585,7 @@ let howard = new Employee("Howard", "Sales");
 let john = new Person("John"); // 错误: 'Person' 的构造函数是被保护的.
 ```
 
-#### readonly修饰符
+#### readonly修饰符             
 你可以使用 readonly关键字将属性设置为只读的。 只读属性必须在声明时或构造函数里被初始化。
 ```typescript
 class Octopus {
@@ -598,6 +598,60 @@ class Octopus {
 let dad = new Octopus("Man with the 8 strong legs");
 dad.name = "Man with the 3-piece suit"; // 错误! name 是只读的.
 ```
+
+
+**参数属性**
+```typescript
+class Animal {
+    constructor(private name: string) { }
+    move(distanceInMeters: number) {
+        console.log(`${this.name} moved ${distanceInMeters}m.`);
+    }
+}
+```
+仅在构造函数里使用 private name: string参数来创建和初始化 name成员。 我们把声明和赋值合并至一处。
+
+参数属性通过给构造函数参数添加一个访问限定符来声明。 使用 private限定一个参数属性会声明并初始化一个私有成员；对于 public和 protected来说也是一样。
+
+
+#### 存取器
+我们从一个没有使用存取器的例子开始。
+```typescript
+class Employee {
+    fullName: string;
+}
+
+let employee = new Employee();
+employee.fullName = "Bob Smith";
+if (employee.fullName) {
+    console.log(employee.fullName);
+}
+```
+我们可以随意的设置 fullName，这是非常方便的，但是这也可能会带来麻烦。
+
+做如下的改造：
+```typescript
+class Employee {
+    private _fullName: string = 'yale';
+
+    get fullName(): string {
+        return this._fullName;
+    }
+
+    set fullName(value: string) {
+        this._fullName = value;
+    }
+}
+let employee: Employee = new Employee();
+employee.fullName = '123';
+console.log(employee.fullName);
+```
+这样就可以控制输入输出的字段了。                    
+
+
+
+
+
 
 
 
