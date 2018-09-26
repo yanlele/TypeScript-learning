@@ -725,6 +725,20 @@ let point3d: Point3d = {x: 1, y: 2, z: 3};
 
 
 
+### <div id="class01-05">05、函数</dvi>
+#### 函数类型
+**为函数定义类型**
+```typescript
+function add(x: number, y: number): number {
+    return x + y;
+}
+let myAdd = function(x: number, y: number): number { return x + y; };
+```
+TypeScript能够根据返回语句自动推断出返回值类型，因此我们通常省略它。
+
+
+#### 可选参数和默认参数
+
 
 
 ## 申明文件
