@@ -1117,10 +1117,34 @@ function createZoo(): Animal[] {
 ```
 
 
+### <div id="class01-09">09、类的兼容性</dvi>
+TypeScript的结构性子类型是根据JavaScript代码的典型写法来设计的。 因为JavaScript里广泛地使用匿名对象，例如函数表达式和对象字面量，所以使用结构类型系统来描述这些类型比使用名义类型系统更好。
+```typescript
+interface Named {
+    name: string;
+}
+
+class Person {
+    name: string;
+}
+
+let p: Named;
+// OK, because of structural typing
+p = new Person();
+```
 
 
-
-
+#### 关于可靠性的注意事项
+TypeScript结构化类型系统的基本规则是，如果x要兼容y，那么y至少具有与x相同的属性。
+```typescript
+interface Named {
+    name: string;
+}
+let x: Named;
+// y's inferred type is { name: string; location: string; }
+let y = { name: 'Alice', location: 'Seattle' };
+x = y;
+```
 
 
 
