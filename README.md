@@ -953,6 +953,180 @@ createInstance(Bee).keeper.hasMask;   // typechecks!
 ```
 
 
+### <div id="class01-07">07、枚举</dvi>
+
+#### 数字枚举
+
+追简单的数字枚举：
+```typescript
+enum Direction {
+    Up = 1,
+    Down,
+    Left,
+    Right
+}
+```
+Up使用初始化为 1。 其余的成员会从 1开始自动增长。 换句话说， Direction.Up的值为 1， Down为 2， Left为 3， Right为 4。
+
+我们还可以完全不使用初始化器：
+```typescript
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}
+```
+Up的值为 0， Down的值为 1等等。
+
+使用枚举很简单：通过枚举的属性来访问枚举成员，和枚举的名字来访问枚举类型：
+```typescript
+enum Response {
+    No = 0,
+    Yes = 1,
+}
+function respond(recipient: string, message: Response): void {
+    // ...
+}
+respond("Princess Caroline", Response.Yes)
+```
+
+数字枚举可以被混入到 计算过的和常量成员。不带初始化器的枚举或者被放在第一的位置，或者被放在使用了数字常量或其它常量初始化了的枚举后面。 换句话说，下面的情况是不被允许的：
+```typescript
+enum E {
+    A = getSomeValue(),
+    B, // error! 'A' is not constant-initialized, so 'B' needs an initializer
+}
+```
+
+#### 字符串枚举
+```typescript
+enum Direction {
+    Up = "UP",
+    Down = "DOWN",
+    Left = "LEFT",
+    Right = "RIGHT",
+}
+```
+
+#### 计算的和常量成员
+- 一个枚举表达式字面量（主要是字符串字面量或数字字面量）               
+- 一个对之前定义的常量枚举成员的引用（可以是在不同的枚举类型中定义的）                
+- 带括号的常量枚举表达式               
+- 一元运算符 +, -, ~其中之一应用在了常量枚举表达式              
+- 常量枚举表达式做为二元运算符 +, -, *, /, %, <<, >>, >>>, &, |, ^的操作对象。 若常数枚举表达式求值后为 NaN或 Infinity，则会在编译阶段报错。
+
+所有其它情况的枚举成员被当作是需要计算得出的值。
+```typescript
+enum FileAccess {
+    // constant members
+    None,
+    Read    = 1 << 1,
+    Write   = 1 << 2,
+    ReadWrite  = Read | Write,
+    // computed member
+    G = "123".length
+}
+```
+
+#### 联合枚举与枚举成员的类型
+```typescript
+enum ShapeKind {
+    Circle,
+    Square,
+}
+
+interface Circle {
+    kind: ShapeKind.Circle;
+    radius: number;
+}
+
+interface Square {
+    kind: ShapeKind.Square;
+    sideLength: number;
+}
+
+let c: Circle = {
+    kind: ShapeKind.Square,
+    //    ~~~~~~~~~~~~~~~~ Error!
+    radius: 100,
+}
+```
+
+#### 反向映射
+```typescript
+enum Enum {
+    A
+}
+let a = Enum.A;
+let nameOfA = Enum[a]; // "A"
+```
+
+#### const枚举
+为了避免在额外生成的代码上的开销和额外的非直接的对枚举成员的访问，我们可以使用 const枚举。 常量枚举通过在枚举上使用 const修饰符来定义。
+```typescript
+const enum Enum {
+    A = 1,
+    B = A * 2
+}
+```
+
+### <div id="class01-08">08、类型推论</dvi>
+#### 基础
+ypeScript里，在有些没有明确指出类型的地方，类型推论会帮助提供类型。如下面的例子
+```typescript
+let x = 3;
+```
+变量x的类型被推断为数字。 **这种推断发生在初始化变量和成员，设置默认参数值和决定函数返回值时。**
+
+#### 最佳通用类型
+当需要从几个表达式中推断类型时候，会使用这些表达式的类型来推断出一个最合适的通用类型。例如，
+```typescript
+let x = [0, 1, null];
+```
+
+由于最终的通用类型取自候选类型，有些时候候选类型共享相同的通用类型，但是却没有一个类型能做为所有候选类型的类型。例如：
+```typescript
+let zoo = [new Rhino(), new Elephant(), new Snake()];
+```
+这里，我们想让zoo被推断为Animal[]类型，但是这个数组里没有对象是Animal类型的，因此不能推断出这个结果。 为了更正，当候选类型不能使用的时候我们需要明确的指出类型：
+```typescript
+let zoo: Animal[] = [new Rhino(), new Elephant(), new Snake()];
+```
+如果没有找到最佳通用类型的话，类型推断的结果为联合数组类型，(Rhino | Elephant | Snake)[]。
+
+
+#### 上下文类型
+```typescript
+window.onmousedown = function(mouseEvent) {
+    console.log(mouseEvent.button);  //<- Error
+};
+```
+这个例子会得到一个类型错误，TypeScript类型检查器使用Window.onmousedown函数的类型来推断右边函数表达式的类型。 因此，就能推断出 mouseEvent参数的类型了。 如果函数表达式不是在上下文类型的位置， mouseEvent参数的类型需要指定为any，这样也不会报错了。
+```typescript
+window.onmousedown = function(mouseEvent: any) {
+    console.log(mouseEvent.button);  //<- Now, no error is given
+};
+```
+
+上下文类型也会做为最佳通用类型的候选类型。比如：
+```typescript
+function createZoo(): Animal[] {
+    return [new Rhino(), new Elephant(), new Snake()];
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
