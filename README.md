@@ -1138,13 +1138,74 @@ p = new Person();
 TypeScript结构化类型系统的基本规则是，如果x要兼容y，那么y至少具有与x相同的属性。
 ```typescript
 interface Named {
-    name: string;
+    name: string
 }
+
 let x: Named;
-// y's inferred type is { name: string; location: string; }
-let y = { name: 'Alice', location: 'Seattle' };
+
+let y= {
+    name: 'yanle',
+    location: 'Chongqing',
+    age: 26
+};
 x = y;
+console.log(x);
+console.log(y);
 ```
+这里要检查y是否能赋值给x，编译器检查x中的每个属性，看是否能在y中也找到对应属性。 在这个例子中， y必须包含名字是name的string类型成员。y满足条件，因此赋值正确。
+
+检查函数参数时使用相同的规则：
+```typescript
+function greet(n: Named) {
+    alert('Hello, ' + n.name);
+}
+greet(y); // OK
+```
+注意，y有个额外的location属性，但这不会引发错误。 只有目标类型（这里是 Named）的成员会被一一检查是否兼容。
+
+#### 比较两个函数
+```typescript
+let x = function(a: number) : number{
+    return 0
+};
+let y = function(b: number, c: string): number{
+    return 0;
+};
+y=x;
+x=y;
+```
+要查看x是否能赋值给y，首先看它们的参数列表。 x的每个参数必须能在y里找到对应类型的参数。                  
+第二个赋值错误，因为y有个必需的第二个参数，但是x并没有，所以不允许赋值。
+
+#### 函数参数双向协变
+略。。。。。。。
+
+#### 可选参数及剩余参数
+比较函数兼容性的时候，可选参数与必须参数是可互换的。 源类型上有额外的可选参数不是错误，目标类型的可选参数在源类型里没有对应的参数也不是错误。             
+这对于类型系统来说是不稳定的，但从运行时的角度来看，可选参数一般来说是不强制的，因为对于大多数函数来说相当于传递了一些undefinded。
+
+```typescript
+function invokeLater(args: any[], callback: (...args: any[]) => void) {
+    /* ... Invoke callback with 'args' ... */
+}
+
+// Unsound - invokeLater "might" provide any number of arguments
+invokeLater([1, 2], (x, y) => console.log(x + ', ' + y));
+
+// Confusing (x and y are actually required) and undiscoverable
+invokeLater([1, 2], (x?, y?) => console.log(x + ', ' + y));
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
