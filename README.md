@@ -1258,8 +1258,63 @@ x = y;  // error, x and y are not compatible
 对于没指定泛型类型的泛型参数时，会把所有泛型参数当成any比较。
 
 
+### <div id="class01-10">10、高级类型</div>
+#### 交叉类型（Intersection Types） 关键字 &
+交叉类型是将多个类型合并为一个类型
+```typescript
+function extend<T, U>(first: T, second: U): T & U {
+    let result = <T & U>{};
+    for (let id in first) {
+        (<any>result)[id] = (<any>first)[id];
+    }
+    for (let id in second) {
+        if (!result.hasOwnProperty(id)) {
+            (<any>result)[id] = (<any>second)[id];
+        }
+    }
+    return result;
+}
 
+class Person {
+    constructor(public name: string) { }
+}
+interface Loggable {
+    log(): void;
+}
+class ConsoleLogger implements Loggable {
+    log() {
+        // ...
+    }
+}
+var jim = extend(new Person("Jim"), new ConsoleLogger());
+var n = jim.name;
+jim.log();
+```
 
+#### 联合类型（Union Types） 关键字 |
+出现在比如某一个字段，我们只想给string 和 number 类型的情况， 例如：
+```typescript
+function padLeft(value: string, padding: any) {
+    if (typeof padding === "number") {
+        return Array(padding + 1).join(" ") + value;
+    }
+    if (typeof padding === "string") {
+        return padding + value;
+    }
+    throw new Error(`Expected string or number, got '${padding}'.`);
+}
+
+padLeft("Hello world", 4); // returns "    Hello world"
+let indentedString = padLeft("Hello world", true); // 编译阶段通过，运行时报错
+```
+利用联合类型实例如下：
+```typescript
+function padLeft(value: string, padding: string | number) {
+    // ...
+}
+let indentedString = padLeft("Hello world", true); // errors during compilation
+```
+如果一个值是联合类型，我们只能访问此联合类型的所有类型里共有的成员。
 
 
 
