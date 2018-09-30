@@ -60,20 +60,44 @@ let y: Function = function():object {
     }
 };*/
 
-let x = () => ({name: 'Alice'});
+/*let x = () => ({name: 'Alice'});
 let y = () => ({name: 'Alice', location: 'Seattle'});
 console.log(x());
 
-// x = y; // OK
-// y = x; // Error because x() lacks a location property
+x = y; // OK
+y = x; // Error because x() lacks a location property*/
 
 // 可选参数及剩余参数
+/*
 function invokeLater(args: any[], callback: (...args: any[]) => void) {
-    /* ... Invoke callback with 'args' ... */
+    /!* ... Invoke callback with 'args' ... *!/
 }
 
 // Unsound - invokeLater "might" provide any number of arguments
 invokeLater([1, 2], (x, y) => console.log(x + ', ' + y));
 
 // Confusing (x and y are actually required) and undiscoverable
-invokeLater([1, 2], (x?, y?) => console.log(x + ', ' + y));
+invokeLater([1, 2], (x?, y?) => console.log(x + ', ' + y));*/
+
+
+// 类
+class Animal {
+    feet: number;
+    constructor(name: string, numFeet: number) {
+
+    }
+
+    static eat():void {
+        console.log('eat')
+    }
+}
+
+class Dog{
+    feet: number;
+    constructor(numFeet: number) { }
+}
+
+let a: Animal;
+let d: Dog;
+a=d;
+d=a;

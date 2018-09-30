@@ -1197,6 +1197,66 @@ invokeLater([1, 2], (x?, y?) => console.log(x + ', ' + y));
 ```
 
 
+#### 枚举
+
+枚举类型与数字类型兼容，并且数字类型与枚举类型兼容。**不同枚举类型之间是不兼容的。**
+```typescript
+enum Status { Ready, Waiting };
+enum Color { Red, Blue, Green };
+
+let status = Status.Ready;
+status = Color.Green;  //error
+```
+
+#### 类
+
+类与对象字面量和接口差不多，但有一点不同：类有静态部分和实例部分的类型。 比较两个类类型的对象时，**只有实例的成员会被比较**。 静态成员和构造函数不在比较的范围内。
+```typescript
+class Animal {
+    feet: number;
+    constructor(name: string, numFeet: number) {
+
+    }
+
+    static eat():void {
+        console.log('eat')
+    }
+}
+
+class Dog{
+    feet: number;
+    constructor(numFeet: number) { }
+}
+
+let a: Animal;
+let d: Dog;
+a=d;    // OK
+d=a;    // OK
+```
+
+#### 泛型             
+因为TypeScript是结构性的类型系统，类型参数只影响使用其做为类型一部分的结果类型。
+```typescript
+interface Empty<T> {
+}
+let x: Empty<number>;
+let y: Empty<string>;
+
+x = y;  // okay, y matches structure of x
+```
+把这个例子改变一下，增加一个成员，就能看出是如何工作的了：
+```typescript
+interface NotEmpty<T> {
+    data: T;
+}
+let x: NotEmpty<number>;
+let y: NotEmpty<string>;
+
+x = y;  // error, x and y are not compatible
+```
+在这里，泛型类型在使用时就好比不是一个泛型类型。
+对于没指定泛型类型的泛型参数时，会把所有泛型参数当成any比较。
+
 
 
 
