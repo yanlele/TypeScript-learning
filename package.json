@@ -1,0 +1,23 @@
+{
+  "name": "tyepscript-learning",
+  "version": "1.0.0",
+  "description": "首先要安装typescript:            \r `npm install -g typescript`",
+  "main": "index.js",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanlele/TyepScript-learning.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yanlele/TyepScript-learning/issues"
+  },
+  "homepage": "https://github.com/yanlele/TyepScript-learning#readme"
+}
