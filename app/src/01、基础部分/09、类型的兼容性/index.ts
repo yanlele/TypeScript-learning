@@ -25,11 +25,6 @@ let y= {
 x = y;
 
 
-import * as _ from 'lodash';
-
-const obj: object = _.range('ad');
-
-console.log(obj);
 
 
 
