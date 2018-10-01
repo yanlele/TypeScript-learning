@@ -113,9 +113,13 @@ export default Animal;*/
 
 
 // 关于一个简单的空间命名的使用
-import Animal from './testName';
+/*import Animal from './testName';
 let person: Animal = new Animal('yanle');
-console.log(person._name);
+console.log(person._name);*/
+
+
+// 关于全局库的一个问题
+// let person: Animal = new Animal('yanle');
 
 
 

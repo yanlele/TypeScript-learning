@@ -101,3 +101,6 @@ let a: Animal;
 let d: Dog;
 a=d;
 d=a;
+
+
+export default {};
