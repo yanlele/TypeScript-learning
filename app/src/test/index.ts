@@ -86,7 +86,7 @@ console.log(person);
 export default Animal;*/
 
 // 一个简单的装饰器测试
-function getAnimal(animal: Function) {
+/*function getAnimal(animal: Function) {
     console.log(animal);
 }
 
@@ -109,6 +109,14 @@ class Animal {
 let person: Animal = new Animal('yanle');
 
 
-export default Animal;
+export default Animal;*/
+
+
+// 关于一个简单的空间命名的使用
+import Animal from './testName';
+let person: Animal = new Animal('yanle');
+console.log(person._name);
+
+
 
 
