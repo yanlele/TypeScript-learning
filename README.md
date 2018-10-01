@@ -1336,7 +1336,10 @@ function padLeft(value: string, padding: string | number) {
 
 
 **instanceof类型保护**
+直接看下面的例子就可以了
+```typescript
 
+```
 
 
 

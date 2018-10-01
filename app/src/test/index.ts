@@ -4,8 +4,8 @@
  * create time 2018/9/30
  */
 
-
-class Animal {
+// 一个测试而已
+/*class Animal {
     private name: string;
 
     constructor(name: string) {
@@ -26,5 +26,61 @@ let fun:Function = function(animal: Animal) {
 };
 
 console.log(fun(person));
+
+export default Animal;*/
+
+// 关于接口和抽象类
+/*
+interface Padder {
+    getPaddingString(): string;
+}
+
+class SpaceRepeatingPadder implements Padder {
+
+    getPaddingString(): string {
+        return null;
+    }
+}
+
+
+abstract class Person {
+    public abstract getPaddingString(): string;
+}
+
+class People extends Person {
+
+    public getPaddingString(): string {
+        return '123';
+    }
+}
+
+export default People*/
+
+
+
+// 关于构造函数 get he set 方法
+class Animal {
+    private name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+
+    get _name(): string {
+        return this.name;
+    }
+
+    set _name(value: string) {
+        this.name = value;
+    }
+}
+
+let person:Animal = new Animal('YANLE');
+console.log(person._name);
+person._name = 'lelelelele';
+console.log(person._name);
+console.log(person);
+
+
 
 export default Animal;
