@@ -6,16 +6,20 @@
 
 
 class Animal {
-    private _name: string;
+    private name: string;
+
     constructor(name: string) {
-        this._name = name;
+        this.name = name;
     }
+
     public getName() {
-        return this._name;
+        return this.name;
     }
 }
 let person: Animal = new Animal('yanle');
 console.log(person.getName());
+
+let student: Animal = new Animal('dupeng');
 
 let fun:Function = function(animal: Animal) {
     return animal.getName();
