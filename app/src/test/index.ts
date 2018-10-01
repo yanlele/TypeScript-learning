@@ -59,7 +59,7 @@ export default People*/
 
 
 // 关于构造函数 get he set 方法
-class Animal {
+/*class Animal {
     private name: string;
 
     constructor(name: string) {
@@ -83,4 +83,32 @@ console.log(person);
 
 
 
+export default Animal;*/
+
+// 一个简单的装饰器测试
+function getAnimal(animal: Function) {
+    console.log(animal);
+}
+
+@getAnimal
+class Animal {
+    private name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+
+    get _name(): string {
+        return this.name;
+    }
+
+    set _name(value: string) {
+        this.name = value;
+    }
+}
+let person: Animal = new Animal('yanle');
+
+
 export default Animal;
+
+
