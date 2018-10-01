@@ -5,27 +5,49 @@
  */
 
 // instanceof类型保护
-interface Padder {
+/*interface Padder {
     getPaddingString(): string;
 }
 
 class SpaceRepeatingPadder implements Padder {
+    private numSpaces: number;
+
+    constructor(numSpaces: number) {
+        this.numSpaces = numSpaces;
+    }
 
     getPaddingString(): string {
-        return null;
+        return Array(this.numSpaces +1).join(" ");
     }
 }
 
+class StringPadder implements Padder {
+    private values: string;
 
-abstract class Person {
-    public abstract getPaddingString(): string;
-}
+    constructor(values: string) {
+        this.values = values;
+    }
 
-class People extends Person {
-
-    public getPaddingString(): string {
-        return '123';
+    getPaddingString() {
+        return this.values;
     }
 }
 
-export default People
+function getRandomPadder(): StringPadder|SpaceRepeatingPadder {
+    return Math.random()<0.5 ? new SpaceRepeatingPadder(4) : new StringPadder('   ');
+}
+// 类型为SpaceRepeatingPadder | StringPadder
+let padder: Padder = getRandomPadder();
+
+if (padder instanceof SpaceRepeatingPadder) {
+    padder; // 类型细化为'SpaceRepeatingPadder'
+}
+if (padder instanceof StringPadder) {
+    padder; // 类型细化为'StringPadder'
+}*/
+
+// 数字字面量
+/*
+function rollDie(): 1|2|3 {
+    return 3+5;
+}*/

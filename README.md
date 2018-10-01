@@ -1338,10 +1338,97 @@ function padLeft(value: string, padding: string | number) {
 **instanceof类型保护**
 直接看下面的例子就可以了
 ```typescript
+interface Padder {
+    getPaddingString(): string;
+}
 
+class SpaceRepeatingPadder implements Padder {
+    private numSpaces: number;
+
+    constructor(numSpaces: number) {
+        this.numSpaces = numSpaces;
+    }
+
+    getPaddingString(): string {
+        return Array(this.numSpaces +1).join(" ");
+    }
+}
+
+class StringPadder implements Padder {
+    private values: string;
+
+    constructor(values: string) {
+        this.values = values;
+    }
+
+    getPaddingString() {
+        return this.values;
+    }
+}
+
+function getRandomPadder(): StringPadder|SpaceRepeatingPadder {
+    return Math.random()<0.5 ? new SpaceRepeatingPadder(4) : new StringPadder('   ');
+}
+// 类型为SpaceRepeatingPadder | StringPadder
+let padder: Padder = getRandomPadder();
+
+if (padder instanceof SpaceRepeatingPadder) {
+    padder; // 类型细化为'SpaceRepeatingPadder'
+}
+if (padder instanceof StringPadder) {
+    padder; // 类型细化为'StringPadder'
+}
 ```
 
 
+#### 字符串字面量类型
+字符串字面量类型允许你指定字符串必须的固定值。在实际应用中，字符串字面量类型可以与联合类型，类型保护和类型别名很好的配合。 通过结合使用这些特性，你可以实现类似枚举类型的字符串。
+```typescript
+type Easing = "ease-in" | "ease-out" | "ease-in-out";
+```
+你只能从三种允许的字符中选择其一来做为参数传递，传入其它值则会产生错误。
+
+#### 数字字面量类型
+TypeScript还具有数字字面量类型。
+```typescript
+function rollDie(): 1 | 2 | 3 | 4 | 5 | 6 {
+    return 1;
+}
+```
+这样用的非常的少
+
+
+#### 可辨识联合（Discriminated Unions）
+你可以合并单例类型，联合类型，类型保护和类型别名来创建一个叫做 可辨识联合的高级模式，它也称做 标签联合或 代数数据类型。 可辨识联合在函数式编程很有用处。 一些语言会自动地为你辨识联合；而TypeScript则基于已有的JavaScript模式。 它具有3个要素：
+
+1、具有普通的单例类型属性— 可辨识的特征。              
+2、一个类型别名包含了那些类型的联合— 联合。                     
+3、此属性上的类型保护。                
+```typescript
+interface Square {
+    kind: "square";
+    size: number;
+}
+interface Rectangle {
+    kind: "rectangle";
+    width: number;
+    height: number;
+}
+interface Circle {
+    kind: "circle";
+    radius: number;
+}
+
+type Shape = Square | Rectangle | Circle;
+
+function area(s: Shape) {
+    switch (s.kind) {
+        case "square": return s.size * s.size;
+        case "rectangle": return s.height * s.width;
+        case "circle": return Math.PI * s.radius ** 2;
+    }
+}
+```
 
 
 
