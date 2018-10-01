@@ -1292,7 +1292,7 @@ jim.log();
 ```
 
 #### 联合类型（Union Types） 关键字 |
-出现在比如某一个字段，我们只想给string 和 number 类型的情况， 例如：
+出现在比如某一个字段，我们只想给string 和 number 类型情况的其中一种， 例如：
 ```typescript
 function padLeft(value: string, padding: any) {
     if (typeof padding === "number") {
@@ -1315,6 +1315,51 @@ function padLeft(value: string, padding: string | number) {
 let indentedString = padLeft("Hello world", true); // errors during compilation
 ```
 如果一个值是联合类型，我们只能访问此联合类型的所有类型里共有的成员。
+
+
+#### 类型保护与区分类型（Type Guards and Differentiating Types）
+**typeof类型保护**
+
+TypeScript可以将它识别为一个类型保护。 也就是说我们可以直接在代码里检查类型了。
+```typescript
+function padLeft(value: string, padding: string | number) {
+    if (typeof padding === "number") {
+        return Array(padding + 1).join(" ") + value;
+    }
+    if (typeof padding === "string") {
+        return padding + value;
+    }
+    throw new Error(`Expected string or number, got '${padding}'.`);
+}
+```
+这些* typeof类型保护*只有两种形式能被识别： typeof v === "typename"和 typeof v !== "typename"， "typename"必须是 "number"， "string"， "boolean"或 "symbol"。
+
+
+**instanceof类型保护**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

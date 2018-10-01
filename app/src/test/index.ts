@@ -1,13 +1,26 @@
 /**
  * create by yanle
  * connect me 331393627@qq.com
- * create time 2018/9/30 0030 21:10
+ * create time 2018/9/30
  */
 
 
+class Animal {
+    private _name: string;
+    constructor(name: string) {
+        this._name = name;
+    }
+    public getName() {
+        return this._name;
+    }
+}
+let person: Animal = new Animal('yanle');
+console.log(person.getName());
 
-import * as _ from 'lodash';
+let fun:Function = function(animal: Animal) {
+    return animal.getName();
+};
 
-const obj: object = _.range(12);
+console.log(fun(person));
 
-console.log(obj);
+export default Animal;
