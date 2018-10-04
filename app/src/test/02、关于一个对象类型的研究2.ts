@@ -17,8 +17,12 @@ class ServerResponse<T> {
 
     constructor(success?: boolean, message?: string, data?: T) {
         this.success = success;
-        this.message = message;
-        this.data = data;
+        if(message) {
+            this.message = message;
+        }
+        if(data) {
+            this.data = data;
+        }
     }
 
 
@@ -72,7 +76,9 @@ class ServerResponse<T> {
 
 
 /*对于这个对象的测试*/
-let response: ServerResponse<string> = ServerResponse.createBySuccess();
+let response: ServerResponse<object> = ServerResponse.createBySuccessData({
+    name: 'yanle'
+});
 console.log(response);
 
 
