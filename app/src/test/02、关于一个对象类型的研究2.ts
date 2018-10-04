@@ -4,11 +4,6 @@
  * create time 2018-10-04 12:45
  */
 
-function JsonIgnore(target:Function) {
-}
-
-
-@JsonIgnore
 class ServerResponse<T> {
     private success: boolean;
     private message:  string;
