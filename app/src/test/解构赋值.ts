@@ -41,3 +41,5 @@ let {username, password}: ISignIn = {
 
 console.log(username);
 console.log(password);
+
+export default {};
