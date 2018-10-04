@@ -71,10 +71,15 @@ class ServerResponse<T> {
 
 
 /*对于这个对象的测试*/
-let response: ServerResponse<object> = ServerResponse.createBySuccessData({
-    name: 'yanle'
-});
+function functionResponse(): ServerResponse<object> {
+    return ServerResponse.createBySuccessData({
+        name: 'yanle'
+    });
+}
+
+let response = functionResponse();
 console.log(response);
+console.log(response)
 
 
 
