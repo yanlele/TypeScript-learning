@@ -9,17 +9,21 @@ interface User {
     name: string
 }
 
-class Test {
+class Test implements User{
+    name: string;
+
     getName() {
-        this.checkAnswer<User>()
+        this.checkAnswer()
     }
 
 
-    checkAnswer<User>() {
-        let data: User;
+    checkAnswer<T>() {
+        let data: T;
         data = {
             name: 'yanle'
         };
         return data
     }
 }
+
+export default {};
