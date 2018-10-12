@@ -12,16 +12,16 @@ interface User {
 class Test implements User{
     name: string;
 
-    getName() {
+    getName<User>() {
         this.checkAnswer()
     }
 
 
     checkAnswer<T>() {
         let data: T;
-        data = {
-            name: 'yanle'
-        };
+        // data = {
+        //     name: 'yanle'
+        // };
         return data
     }
 }

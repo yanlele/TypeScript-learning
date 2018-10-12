@@ -5,13 +5,14 @@
 
 
 class Father {
-    protected name;
+    protected myName;
     private age;
-    protected address: string = '重庆';
+    public address: string = '重庆';
 
     constructor(name = 'yanle', age = 123) {
-        this.name = name;
+        this.myName = name;
         this.age = age;
+        this.address = '123';
     }
 }
 
@@ -20,8 +21,12 @@ class Child extends Father {
         super()
     }
 
-    run() {
-        this.name
-        this.address;
+    static run() {
+        this.name;
+        console.log(this.name);
     }
 }
+
+Child.run();
+
+export default Father;
