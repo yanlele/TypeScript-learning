@@ -5,14 +5,14 @@
 
 
 class Father {
-    protected myName;
+    protected name;
     private age;
-    public address: string = '重庆';
+    protected address: string = '重庆';
 
     constructor(name = 'yanle', age = 123) {
-        this.myName = name;
+        this.name = name;
         this.age = age;
-        this.address = '123';
+        console.log(123);
     }
 }
 
@@ -21,12 +21,22 @@ class Child extends Father {
         super()
     }
 
-    static run() {
-        this.name;
-        console.log(this.name);
+    run() {
+        this.name
+        this.address;
     }
 }
 
-Child.run();
+class Child2 extends Father {
+    constructor() {
+        super();
+    }
+
+    run() {
+    }
+}
+
+let child1: Child = new Child();
+let child2: Child2 = new Child2();
 
 export default Father;
