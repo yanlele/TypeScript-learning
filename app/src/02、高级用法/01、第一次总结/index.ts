@@ -13,5 +13,5 @@ function get1<T extends object, K extends keyof T>(o: T, name: K): T[K] {
 
 console.log(get(data, 'sfsdf'));
 
-console.log(get1(data, 'age1'));
+console.log(get1(data, 'age'));
 
